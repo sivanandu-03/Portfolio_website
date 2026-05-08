@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { personalInfo } from '../data';
+import profileImg from '../assets/image.png';
 
 const About = () => {
   return (
@@ -18,7 +19,7 @@ const About = () => {
               <div className="absolute inset-0 bg-gradient-to-tr from-purple-500 to-blue-500 rounded-2xl rotate-6 opacity-50 blur-lg"></div>
               <div className="absolute inset-0 bg-gradient-to-tr from-purple-500 to-blue-500 rounded-2xl -rotate-3"></div>
               <img
-                src="https://images.unsplash.com/photo-1537511446984-935f663eb1f4?q=80&w=600&auto=format&fit=crop"
+                src={profileImg}
                 alt={personalInfo.name}
                 className="absolute inset-0 w-full h-full object-cover rounded-2xl shadow-xl grayscale hover:grayscale-0 transition-all duration-500"
                 loading="lazy"
@@ -42,7 +43,7 @@ const About = () => {
                 Currently, I am exploring advanced scalable architecture patterns and diving deeper into full-stack development to build comprehensive digital experiences. When I'm not coding, I'm usually participating in competitive programming or learning about new system design paradigms.
               </p>
             </div>
-            
+
             <div className="mt-8 flex gap-4">
               <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700">
                 <h4 className="text-3xl font-bold text-primary mb-1">235+</h4>

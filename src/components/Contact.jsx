@@ -1,8 +1,38 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { personalInfo } from '../data';
-import { FaGithub, FaLinkedin, FaEnvelope, FaPhone } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaEnvelope, FaPhone, FaCheckCircle } from 'react-icons/fa';
 
 const Contact = () => {
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    // Open user's email client with pre-filled details
+    const subject = encodeURIComponent(`Portfolio Contact from ${formData.name}`);
+    const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`);
+    window.location.href = `mailto:${personalInfo.email}?subject=${subject}&body=${body}`;
+    
+    // Simulate network delay for UX
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setSubmitStatus('success');
+      setFormData({ name: '', email: '', message: '' });
+      
+      // Reset success message after 5 seconds
+      setTimeout(() => setSubmitStatus(null), 5000);
+    }, 800);
+  };
+
   return (
     <section id="contact" className="py-24 bg-slate-50 dark:bg-slate-950 relative overflow-hidden">
       {/* Decorative blobs */}
@@ -87,21 +117,33 @@ const Contact = () => {
               viewport={{ once: true }}
               className="w-full md:w-7/12"
             >
-              <form className="bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col gap-6">
+              <form onSubmit={handleSubmit} className="bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col gap-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Name</label>
-                  <input type="text" id="name" className="w-full px-4 py-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-shadow" placeholder="John Doe" />
+                  <input type="text" id="name" value={formData.name} onChange={handleChange} required className="w-full px-4 py-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-shadow" placeholder="John Doe" />
                 </div>
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Email</label>
-                  <input type="email" id="email" className="w-full px-4 py-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-shadow" placeholder="john@example.com" />
+                  <input type="email" id="email" value={formData.email} onChange={handleChange} required className="w-full px-4 py-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-shadow" placeholder="john@example.com" />
                 </div>
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Message</label>
-                  <textarea id="message" rows="4" className="w-full px-4 py-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-shadow" placeholder="How can I help you?"></textarea>
+                  <textarea id="message" rows="4" value={formData.message} onChange={handleChange} required className="w-full px-4 py-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-shadow" placeholder="How can I help you?"></textarea>
                 </div>
-                <button type="button" className="w-full py-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-lg font-bold text-lg hover:shadow-lg hover:shadow-primary/30 transition-shadow">
-                  Send Message
+                
+                {submitStatus === 'success' && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex items-center gap-2 text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 p-4 rounded-lg"
+                  >
+                    <FaCheckCircle className="shrink-0" />
+                    <span className="text-sm font-medium">Message prepared successfully! Opening your email client...</span>
+                  </motion.div>
+                )}
+                
+                <button type="submit" disabled={isSubmitting} className="w-full py-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-lg font-bold text-lg hover:shadow-lg hover:shadow-primary/30 transition-all disabled:opacity-70 disabled:cursor-not-allowed">
+                  {isSubmitting ? 'Processing...' : 'Send Message'}
                 </button>
               </form>
             </motion.div>
