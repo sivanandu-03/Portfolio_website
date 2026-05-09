@@ -33,7 +33,7 @@ To run this project locally, follow these steps:
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/portfolio-website.git
+   git clone https://github.com/sivanandu-03/Portfolio_website
    ```
 2. Navigate to the project directory:
    ```bash
