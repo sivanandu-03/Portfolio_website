@@ -5,21 +5,21 @@ A fully responsive, animated personal portfolio website built to showcase my ski
 **Author**: Nalla Sivanandu
 
 ## Live Demo
-[View Live Site](#) *(Add live URL after deployment)*
+[View Live Site](https://portfolio-website-3-nmpf.onrender.com)
 
 ## Tech Stack
 - **Frontend**: React.js
 - **Build Tool**: Vite
-- **Styling**: Tailwind CSS v4
+- **Styling**: Tailwind CSS v4, Custom CSS
 - **Animations**: Framer Motion
 - **Parallax Effects**: React Scroll Parallax
 - **Icons**: React Icons, Lucide React
 
 ## Features
 - Fully responsive design (Mobile, Tablet, Desktop)
+- Premium Dark Glassmorphism aesthetic with vibrant gradients
 - Smooth parallax scrolling effects in the Hero section
 - On-scroll animations powered by Framer Motion
-- Dark/Light mode color schemes (based on system preference)
 - Accessible design with `prefers-reduced-motion` support
 
 ## Local Development Setup
